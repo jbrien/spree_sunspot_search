@@ -1,7 +1,18 @@
 module Spree
   module Search
     class Sunspot < defined?(Spree::Search::MultiDomain) ? Spree::Search::MultiDomain : Spree::Core::Search::Base
+
       def retrieve_products
+        retrieve_results.results
+      end
+
+      def retrieve_hits
+        retrieve_results.hits
+      end
+
+      protected
+
+      def retrieve_results
         conf = Spree::Search.configuration
 
         # send(name) looks in @properties
@@ -34,10 +45,8 @@ module Spree
           paginate(:page => page, :per_page => per_page)
         end
 
-        self.sunspot.results
+        self.sunspot
       end
-
-      protected
 
       def prepare(params)
         # super copies over :taxon and other variables into properties
@@ -63,4 +72,3 @@ module Spree
 
   end
 end
-
