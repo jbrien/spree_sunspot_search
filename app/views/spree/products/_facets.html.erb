@@ -1,6 +1,7 @@
 <%
-facets_arr = Spree::Search.configuration.display_facets
-limit = Spree::SunspotSearch::Config[:facet_display_limit]
+conf = Spree::Search.configuration
+facets_arr = conf.display_facets
+limit = conf.facet_display_limit
 
 if @taxon
     display_list = @taxon.leaf? ? [@taxon.id] : @taxon.children.map(&:id)

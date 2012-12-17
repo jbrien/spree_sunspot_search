@@ -7,7 +7,6 @@ module Spree
 
       initializer "spree.sunspot_search.preferences", :after => "spree.environment" do |app|
         Spree::Config.searcher_class = Spree::Search::Sunspot
-        Spree::SunspotSearch::Config = Spree::SunspotConfiguration.new
       end
 
       def self.activate
@@ -15,11 +14,9 @@ module Spree
           Rails.configuration.cache_classes ? require(c) : load(c)
         end
 
-        # Load application's view overrides
-        Dir.glob(File.join(File.dirname(__FILE__), "../../../app/overrides/**/*.rb")) do |c|
-          Rails.configuration.cache_classes ? require(c) : load(c)
+        if Rails.env.development?
+          Spree::Config.searcher_class = Spree::Search::Sunspot
         end
-
       end
       config.to_prepare &method(:activate).to_proc
     end

@@ -48,13 +48,19 @@ module Spree
         # the faceting partial is kind of 'dumb' about the params object: doesn't clean it out and just
         # dumps all the params into the query string
 
+        conf = Spree::Search.configuration
+
         @properties[:query] = params[:keywords]
         @properties[:price] = params[:price]
 
-        @properties[:sort] = params[:sort] || :score
-        @properties[:order] = params[:order] || :desc
+        @properties[:sort] = params[:sort] || conf.default_sort_key
+        @properties[:order] = params[:order] || conf.default_sort_order
 
-        Spree::Search.configuration.display_facets.each do |name|
+        # ensure that :sort and :order are legit
+        @properties[:sort] = :score unless conf.sort_fields.keys.include? @properties[:sort]
+        @properties[:order] = :desc unless [:desc, :asc].include? @properties[:sort]
+
+        conf.display_facets.each do |name|
           @properties[name] ||= params["#{name}_facet"]
         end
       end

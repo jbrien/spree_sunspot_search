@@ -7,7 +7,10 @@ module Spree
                     :other_facets,
                     :show_facets,
                     :fields,
-                    :sort_fields
+                    :sort_fields,
+                    :default_sort_key,
+                    :default_sort_order,
+                    :facet_display_limit
 
       def initialize
         # Price ranges to be used for faceting
@@ -37,10 +40,15 @@ module Spree
         # in the suggestions partial
         self.show_facets = []
 
+        self.facet_display_limit = 1
+
         self.sort_fields = {
           :score => :desc,
           :price => [:asc, :desc],
         }
+
+        self.default_sort_key = :score
+        self.default_sort_order = :desc
       end
 
       def display_facets
