@@ -61,5 +61,5 @@ module Spree
 end
 
 # TODO move this to a more appropriate / intention revealing location
-Spree::Search.configuration {}
+Spree::Search.configure {}
 
