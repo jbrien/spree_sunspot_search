@@ -5,7 +5,6 @@ Spree::Sunspot::Setup.query_filters do |filters|
   #   f.search_param = 'price'
   #   # Can be :any (||) or :all (&&)
   #   f.search_condition = :any
-  #   f.display_name = 'Price'
   #   f.values { [0..10, 10..20, 20..30] }
   # end
 
@@ -13,7 +12,6 @@ Spree::Sunspot::Setup.query_filters do |filters|
   # filters.add do |f|
   #   f.search_param = 'category_name'
   #   f.search_condition = :any
-  #   f.display_name = 'Category'
   #   f.values { Spree::Taxon.find_by_permalink('categories').children.map(&:name) }
   # end
 
@@ -21,7 +19,6 @@ Spree::Sunspot::Setup.query_filters do |filters|
   # filters.add do |f|
   #   f.search_param = 'brand_name'
   #   f.search_condition = :any
-  #   f.display_name = 'Brand'
   #   f.values { [] }
   # end
 
