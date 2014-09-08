@@ -90,7 +90,7 @@ module Spree
         @solr_search.execute
         if @solr_search.total > 0
           @hits = @solr_search.hits.collect{|hit| hit.primary_key.to_i}
-          base_scope = base_scope.where( ["#{Spree::Product.table_name}.id in (?)", @hits] )
+          base_scope = base_scope.where( ["#{Spree::Product.table_name}.id in (?)", @hits] ).order("FIELD(#{Spree::Product.table_name}.id, #{@hits.join(',')})")
         else
           base_scope = base_scope.where( ["#{Spree::Product.table_name}.id = -1"] )
         end
